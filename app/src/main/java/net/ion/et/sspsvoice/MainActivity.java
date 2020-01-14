@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         connectToServer();
-        showBallCount(1, 2, 2);
+        showBallCount(0, 0, 0);
     }
 
     @Override
@@ -195,15 +195,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onError(int error) {
             System.out.println("onError");
-            messageView.setText("음성 인식에 실패했습니다. 다시 천천히 말씀해 주십시오.");
+            messageView.setText("음성 인식에 실패했습니다. 다시 시도해 주십시오.");
 
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mRecognizer.startListening(intent);
-                }
-            }, 1000);
+//            Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mRecognizer.startListening(intent);
+//                }
+//            }, 1000);
         }
 
         @Override
@@ -212,7 +212,52 @@ public class MainActivity extends AppCompatActivity {
             String[] arr = new String[resultList.size()];
             resultList.toArray(arr);
 
-            messageView.setText((String)arr[0] + " : 다시 시도하려면 시작버튼을 눌러주십시오.");
+            String r = arr[0];
+
+            try {
+                JSONObject message = new JSONObject();
+                message.put("messageType", "addBallCount");
+
+                JSONObject data = new JSONObject();
+                message.put("data", data);
+
+                if (r.startsWith("볼")) {
+                    r = "볼";
+                    data.put("b", 1);
+                    data.put("s", 0);
+                    data.put("p", 0);
+                    data.put("o", 0);
+
+                } else if (r.startsWith("스트")) {
+                    r = "스트라이크";
+                    data.put("b", 0);
+                    data.put("s", 1);
+                    data.put("p", 0);
+                    data.put("o", 0);
+                } else if (r.startsWith("파")) {
+                    r = "파울";
+                    data.put("b", 0);
+                    data.put("s", 0);
+                    data.put("p", 1);
+                    data.put("o", 0);
+                } else if (r.startsWith("아")) {
+                    r = "아웃";
+                    data.put("b", 0);
+                    data.put("s", 0);
+                    data.put("p", 0);
+                    data.put("o", 1);
+                }
+
+                sendMessage(message);
+
+            } catch (Exception e) {
+                System.out.println("분석된 볼카운트 전송실패");
+                e.printStackTrace();
+            }
+
+
+
+            messageView.setText(r + " : 다시 시도하려면 시작버튼을 눌러주십시오.");
             Toast.makeText(getApplicationContext(), arr[0], Toast.LENGTH_LONG).show();
         }
 
@@ -233,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
 
         try
         {
-            uri = new URI("ws://localhost:8090");
+            uri = new URI("ws://192.168.10.235:8080/brism/11/12");
         }
         catch (URISyntaxException e) {
 
@@ -244,6 +289,18 @@ public class MainActivity extends AppCompatActivity {
         mWebSocketClient = new WebSocketClient(uri) {
             @Override
             public void onOpen(ServerHandshake handshakedata) {
+                System.out.println("==>Connected");
+
+                try {
+                    // 현재 볼카운트를 달라고 요청을 보낸다.
+                    JSONObject message = new JSONObject();
+                    message.put("messageType", "getBallCount");
+                    sendMessage(message);
+
+                } catch (Exception e) {
+                    System.out.println("볼카운트 요청에 실패했습니다.");
+                    e.printStackTrace();
+                }
 
             }
 
@@ -252,10 +309,13 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
 
-                    JSONObject object = new JSONObject(message);
-                    object.getInt("strike");
-                    object.getInt("ball");
-                    object.getInt("out");
+                    JSONObject msg = new JSONObject(message);
+                    JSONObject data = (JSONObject)msg.get("data");
+                    int s = data.getInt("s");
+                    int b = data.getInt("b");
+                    int o = data.getInt("o");
+
+                    showBallCount(s, b, o);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -269,6 +329,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onError(Exception ex) {
+                System.out.println("소켓에 오류가 발생했습니다.");
                 ex.printStackTrace();
             }
         };
@@ -281,12 +342,8 @@ public class MainActivity extends AppCompatActivity {
         mWebSocketClient.close();
     }
 
-    private void sendMessage(String message) throws Exception
+    private void sendMessage(JSONObject message)
     {
-        JSONObject object = new JSONObject();
-        object.put("messageType", "voice");
-        object.put("data", message);
-
-        mWebSocketClient.send(object.toString());
+        mWebSocketClient.send(message.toString());
     }
 }
