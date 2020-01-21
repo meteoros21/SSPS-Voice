@@ -218,6 +218,9 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject message = new JSONObject();
                 message.put("messageType", "addBallCount");
 
+                message.put("subGameId", 11);
+                message.put("deviceType", 12);
+
                 JSONObject data = new JSONObject();
                 message.put("data", data);
 
@@ -278,7 +281,8 @@ public class MainActivity extends AppCompatActivity {
 
         try
         {
-            uri = new URI("ws://192.168.10.235:8080/brism/11/12");
+            // uri = new URI("ws://192.168.10.84:8080/brism"); // localhost가 인식되지 않아서..
+            uri = new URI("ws://ssps.tamm.io/brism");
         }
         catch (URISyntaxException e) {
 
@@ -294,6 +298,8 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     // 현재 볼카운트를 달라고 요청을 보낸다.
                     JSONObject message = new JSONObject();
+                    message.put("subGameId", 11);
+                    message.put("deviceType", 12);
                     message.put("messageType", "getBallCount");
                     sendMessage(message);
 
@@ -310,14 +316,23 @@ public class MainActivity extends AppCompatActivity {
                 try {
 
                     JSONObject msg = new JSONObject(message);
-                    JSONObject data = (JSONObject)msg.get("data");
-                    int s = data.getInt("s");
-                    int b = data.getInt("b");
-                    int o = data.getInt("o");
+                    String messageType = msg.getString("messageType");
 
-                    showBallCount(s, b, o);
+                    if (messageType != null && messageType.equals("showBallCount")) {
 
-                } catch (Exception e) {
+                        JSONObject data = (JSONObject) msg.get("data");
+                        int subGameId = msg.getInt("subGameId");
+                        int deviceType = msg.getInt("deviceType");
+
+                        if (subGameId == 11) {
+                            int s = data.getInt("s");
+                            int b = data.getInt("b");
+                            int o = data.getInt("o");
+
+                            showBallCount(s, b, o);
+                        }
+                    }
+                } catch(Exception e){
                     e.printStackTrace();
                 }
             }
