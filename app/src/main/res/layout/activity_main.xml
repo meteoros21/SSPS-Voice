@@ -7,8 +7,8 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,134 +16,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dip">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dip"
-                    android:text="B"
-                    android:textSize="24sp" />
-
-                <ImageView
-                    android:id="@+id/ivBall1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="30dp"
-                    android:minHeight="30dp"
-                    android:padding="5dp"
-                    app:srcCompat="@drawable/circle_green" />
-
-                <ImageView
-                    android:id="@+id/ivBall2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="30dp"
-                    android:minHeight="30dp"
-                    android:padding="5dp"
-                    app:srcCompat="@drawable/circle_gray" />
-
-                <ImageView
-                    android:id="@+id/ivBall3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="30dip"
-                    android:minHeight="30dip"
-                    android:padding="5dip"
-                    app:srcCompat="@drawable/circle_gray" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="S"
-                    android:textSize="24sp" />
-
-                <ImageView
-                    android:id="@+id/ivStrike1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="30dp"
-                    android:minHeight="30dp"
-                    android:padding="5dp"
-                    app:srcCompat="@drawable/circle_yellow" />
-
-                <ImageView
-                    android:id="@+id/ivStrike2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="30dp"
-                    android:minHeight="30dp"
-                    android:padding="5dp"
-                    app:srcCompat="@drawable/circle_gray" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="O"
-                    android:textSize="24sp" />
-
-                <ImageView
-                    android:id="@+id/ivOut1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="30dp"
-                    android:minHeight="30dp"
-                    android:padding="5dp"
-                    app:srcCompat="@drawable/circle" />
-
-                <ImageView
-                    android:id="@+id/ivOut2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="30dp"
-                    android:minHeight="30dp"
-                    android:padding="5dp"
-                    app:srcCompat="@drawable/circle" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </TableLayout>
-
-        <TextView
-            android:id="@+id/textMessage"
-            android:layout_width="257dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:gravity="center"
-            android:text="시작하기 버튼을 누르고 명령하십시오."
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/buttonStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="시작하기" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listview1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

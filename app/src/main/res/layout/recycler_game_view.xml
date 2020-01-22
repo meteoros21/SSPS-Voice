@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="15sp"
+    android:paddingTop="10sp"
+    android:paddingRight="15sp"
+    android:paddingBottom="10sp">
+
+    <TextView
+        android:id="@+id/tvGameName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="전국 직장인 야구 대회"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvSubGameName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvStartTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="TextView" />
+</LinearLayout>
