@@ -43,9 +43,7 @@ public class ApiHandler extends AsyncTask<String, String, String>
     {
         try
         {
-            //URL url = new URL(apiUrl + path + p.toString());
-            URL url = new URL("http://ssps-api.tamm.io/api/common/games");
-            // URL url = new URL("http://192.168.10.106:8091/api/common/games");
+            URL url = new URL("http://ssps-api.tamm.io/api/" + path);
             mConnection = (HttpURLConnection)url.openConnection();
 
             mConnection.setRequestMethod("GET");

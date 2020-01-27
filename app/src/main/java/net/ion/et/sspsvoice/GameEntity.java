@@ -8,6 +8,7 @@ public class GameEntity
     public String gameName;
     public String subGameName;
     public String startTime;
+    public String location;
 
     public int getSubGameId() {
         return subGameId;
@@ -41,11 +42,19 @@ public class GameEntity
         this.startTime = startTime;
     }
 
+    public String getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public void parse(JSONObject object) throws Exception
     {
         this.gameName = (String)object.get("gameName");
-        this.subGameName = "test";
-        this.subGameId = 11;
-        this.startTime = "2012-02-01 12:30:00";
+        this.subGameName = (String)object.get("subGameName");
+        this.subGameId = object.getInt("subGameId");
+        this.startTime = (String)object.get("startTime");
     }
 }

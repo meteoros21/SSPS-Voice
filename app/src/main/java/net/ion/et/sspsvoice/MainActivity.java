@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             ApiHandler apiHandler = new ApiHandler(this);
-            apiHandler.execute("");
+            apiHandler.execute("/common/gameSchedule?sportsCd=2&matchStateCd=1");
         }
         catch (Exception e)
         {

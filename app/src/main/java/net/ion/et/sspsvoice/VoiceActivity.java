@@ -287,7 +287,7 @@ public class VoiceActivity extends AppCompatActivity
 
         try
         {
-            // uri = new URI("ws://192.168.10.106:8080/brism"); // localhost가 인식되지 않아서..
+            // uri = new URI("ws://192.168.10.198:8080/brism"); // localhost가 인식되지 않아서..
             uri = new URI("ws://ssps.tamm.io/brism");
         }
         catch (URISyntaxException e) {
